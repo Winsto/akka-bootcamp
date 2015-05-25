@@ -33,5 +33,9 @@ namespace ChartApp
 
         #endregion
 
+        private void AddSeries_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
