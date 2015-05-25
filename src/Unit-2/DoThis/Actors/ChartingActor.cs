@@ -57,6 +57,8 @@ namespace ChartApp.Actors
             if (_seriesIndex.ContainsKey(seriesMessage.Series.Name)) return;
 
             _seriesIndex[seriesMessage.Series.Name] = seriesMessage.Series;
+
+            _chart.Series.Add(seriesMessage.Series);
         }
 
         private void HandleInitialize(InitializeChart ic)
