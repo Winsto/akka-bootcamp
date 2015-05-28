@@ -62,5 +62,8 @@ namespace ChartApp
         {
         	toggleActors[CounterType.Disk].Tell(new ButtonToggleActor.Toggle());
         }
+        
+        private void PauseSelectorClick(object sender, EventArgs e)
+        {}
     }
 }
