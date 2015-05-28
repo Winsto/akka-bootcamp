@@ -30,10 +30,10 @@ namespace ChartApp.Actors
 			this.coordinatorActor = coordinatorActor;
 			this.myButton = myButton;
 			this.isToggledOn = isToggledOn;
-			this.myCounterType = CounterType;
+			this.myCounterType = myCounterType;
 		}
 		
-		protected override void OnRecieve(object message)
+		protected override void OnReceive(object message)
 		{
 			if(message is Toggle && isToggledOn)
 			{
