@@ -33,13 +33,16 @@ namespace ChartApp
 				new PerformanceCounterCoordinatorActor(_chartActor)), "counters");
             
             toggleActors[CounterType.Cpu] = Program.ChartActors.ActorOf(
-            	Props.Create(() => new ButtonToggleActor(coordinatorActor, cpuSelector, CounterType.Cpu, false)));
+            	Props.Create(() => new ButtonToggleActor(coordinatorActor, cpuSelector, CounterType.Cpu, false)).
+            	WithDispatcher("akka.actor.synchronized-dispatcher"));
             
             toggleActors[CounterType.Memory] = Program.ChartActors.ActorOf(
-            	Props.Create(() => new ButtonToggleActor(coordinatorActor, memorySelector, CounterType.Memory, false)));
+            	Props.Create(() => new ButtonToggleActor(coordinatorActor, memorySelector, CounterType.Memory, false)).
+            	WithDispatcher("akka.actor.synchronized-dispatcher"));
             
             toggleActors[CounterType.Disk] = Program.ChartActors.ActorOf(
-            	Props.Create(() => new ButtonToggleActor(coordinatorActor, diskSelector, CounterType.Disk, false)));
+            	Props.Create(() => new ButtonToggleActor(coordinatorActor, diskSelector, CounterType.Disk, false)).
+            	WithDispatcher("akka.actor.synchronized-dispatcher"));
             
             toggleActors[CounterType.Cpu].Tell(new ButtonToggleActor.Toggle());
         }
