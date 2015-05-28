@@ -25,9 +25,9 @@
     		Disk
     	}
 
-    	public class SubscriberCounter
+    	public class SubscribeCounter
     	{
-    		public SubscriberCounter(CounterType counter, IActorRef subscriber)
+    		public SubscribeCounter(CounterType counter, IActorRef subscriber)
     		{
     			Counter = counter;
 
@@ -41,9 +41,9 @@
     		{ get; private set; }
     	}
 
-    	public class UnsubscriberCounter
+    	public class UnsubscribeCounter
     	{
-    		public UnsubscriberCounter(CounterType counter, IActorRef subscriber)
+    		public UnsubscribeCounter(CounterType counter, IActorRef subscriber)
     		{
     			Subscriber = subscriber;
     			Counter = counter;
