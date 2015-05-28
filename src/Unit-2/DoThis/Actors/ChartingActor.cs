@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Windows.Forms;
 using Akka.Actor;
 
 namespace ChartApp.Actors
@@ -13,6 +14,8 @@ namespace ChartApp.Actors
     	private int xPosCounter = 0;
     	
         #region Messages
+        
+        public class TogglePause{}
 
         public class RemoveSeries
         {
@@ -48,6 +51,7 @@ namespace ChartApp.Actors
 
         private readonly Chart _chart;
         private Dictionary<string, Series> _seriesIndex;
+        private readonly Button pauseButton;
 
         public ChartingActor(Chart chart) : this(chart, new Dictionary<string, Series>())
         {
@@ -58,13 +62,46 @@ namespace ChartApp.Actors
             _chart = chart;
             _seriesIndex = seriesIndex;
 
+        }
+        
+        private void Charting()
+        {
             Receive<InitializeChart>(message => HandleInitialize(message));
             Receive<AddSeries>(message => HandleAddSeries(message));
         	Receive<RemoveSeries>(removeSeriesMessage => HandleRemoveSeries(removeSeriesMessage));
         	Receive<Metric>(metricMessage => HandleMetrics(metricMessage));
+        	
+        	Receive<TogglePause>(message => 
+        	                     {
+        	                     	SetPauseButtonText(true);
+        	                     	BecomeStacked(Paused);
+        	                     });
+        }
+        
+        private void Paused()
+        {
+        	Receive<Metric>(message => HandleMetricsPaused(message));
+        	Receive<TogglePause>(message =>
+        	                     {
+        	                     	SetPauseButtonText(false);
+        	                     	UnbecomeStacked();
+        	                     });
         }
 
         #region Individual Message Type Handlers
+        
+        private void HandleMetricsPaused(Metric metric)
+        {
+        	if(!string.IsNullOrEmpty(metric.SeriesName) && _seriesIndex.ContainsKey(metric.SeriesName))
+        	{
+        		var series = _seriesIndex[metric.SeriesName];
+        		series.Points.AddXY(xPosCounter++, 0.0d); // Set Y value to zero when paused
+        		while(series.Points.Count > MaxPoints)
+        			series.Points.RemoveAt(0);
+        		
+        		SetChartBoundaries();
+        	}
+        }
 		
         private void HandleInitialize(InitializeChart ic)
         {
@@ -146,6 +183,11 @@ namespace ChartApp.Actors
 		        area.AxisY.Maximum = maxAxisY;
         	}
     	}
+        
+        private void SetPauseButtonText(bool paused)
+        {
+        	pauseButton.Text = string.Format("{0}", !paused ? "PAUSE ||" : "RESUME ->");
+        }
     }
 }
 
