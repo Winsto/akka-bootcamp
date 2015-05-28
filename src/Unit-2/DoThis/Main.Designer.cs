@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-        	System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-        	System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-        	System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+        	System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+        	System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+        	System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
         	this.sysChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
         	this.diskSelector = new System.Windows.Forms.Button();
         	this.memorySelector = new System.Windows.Forms.Button();
@@ -40,26 +40,27 @@
         	// 
         	// sysChart
         	// 
-        	chartArea1.Name = "ChartArea1";
-        	this.sysChart.ChartAreas.Add(chartArea1);
+        	chartArea3.Name = "ChartArea1";
+        	this.sysChart.ChartAreas.Add(chartArea3);
         	this.sysChart.Dock = System.Windows.Forms.DockStyle.Fill;
-        	legend1.Name = "Legend1";
-        	this.sysChart.Legends.Add(legend1);
+        	legend3.Name = "Legend1";
+        	this.sysChart.Legends.Add(legend3);
         	this.sysChart.Location = new System.Drawing.Point(0, 0);
-        	this.sysChart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+        	this.sysChart.Margin = new System.Windows.Forms.Padding(4);
         	this.sysChart.Name = "sysChart";
-        	series1.ChartArea = "ChartArea1";
-        	series1.Legend = "Legend1";
-        	series1.Name = "Series1";
-        	this.sysChart.Series.Add(series1);
+        	series3.ChartArea = "ChartArea1";
+        	series3.Legend = "Legend1";
+        	series3.Name = "Series1";
+        	this.sysChart.Series.Add(series3);
         	this.sysChart.Size = new System.Drawing.Size(912, 549);
         	this.sysChart.TabIndex = 0;
         	this.sysChart.Text = "sysChart";
         	// 
         	// diskSelector
         	// 
+        	this.diskSelector.Anchor = System.Windows.Forms.AnchorStyles.Right;
         	this.diskSelector.Location = new System.Drawing.Point(758, 466);
-        	this.diskSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+        	this.diskSelector.Margin = new System.Windows.Forms.Padding(4);
         	this.diskSelector.Name = "diskSelector";
         	this.diskSelector.Size = new System.Drawing.Size(133, 28);
         	this.diskSelector.TabIndex = 1;
@@ -69,8 +70,9 @@
         	// 
         	// memorySelector
         	// 
+        	this.memorySelector.Anchor = System.Windows.Forms.AnchorStyles.Right;
         	this.memorySelector.Location = new System.Drawing.Point(758, 431);
-        	this.memorySelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+        	this.memorySelector.Margin = new System.Windows.Forms.Padding(4);
         	this.memorySelector.Name = "memorySelector";
         	this.memorySelector.Size = new System.Drawing.Size(133, 28);
         	this.memorySelector.TabIndex = 2;
@@ -80,8 +82,9 @@
         	// 
         	// cpuSelector
         	// 
+        	this.cpuSelector.Anchor = System.Windows.Forms.AnchorStyles.Right;
         	this.cpuSelector.Location = new System.Drawing.Point(758, 395);
-        	this.cpuSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+        	this.cpuSelector.Margin = new System.Windows.Forms.Padding(4);
         	this.cpuSelector.Name = "cpuSelector";
         	this.cpuSelector.Size = new System.Drawing.Size(133, 28);
         	this.cpuSelector.TabIndex = 3;
@@ -98,7 +101,7 @@
         	this.Controls.Add(this.memorySelector);
         	this.Controls.Add(this.diskSelector);
         	this.Controls.Add(this.sysChart);
-        	this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+        	this.Margin = new System.Windows.Forms.Padding(4);
         	this.Name = "Main";
         	this.Text = "System Metrics";
         	this.Load += new System.EventHandler(this.Main_Load);
