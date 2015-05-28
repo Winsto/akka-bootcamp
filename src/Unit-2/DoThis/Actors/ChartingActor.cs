@@ -53,15 +53,17 @@ namespace ChartApp.Actors
         private Dictionary<string, Series> _seriesIndex;
         private readonly Button pauseButton;
 
-        public ChartingActor(Chart chart) : this(chart, new Dictionary<string, Series>())
+        public ChartingActor(Chart chart, Button pauseButton) : this(chart, new Dictionary<string, Series>(), pauseButton)
         {
         }
 
-        public ChartingActor(Chart chart, Dictionary<string, Series> seriesIndex)
+        public ChartingActor(Chart chart, Dictionary<string, Series> seriesIndex, Button pauseButton)
         {
             _chart = chart;
             _seriesIndex = seriesIndex;
+            this.pauseButton = pauseButton;
 
+            Charting();
         }
         
         private void Charting()
