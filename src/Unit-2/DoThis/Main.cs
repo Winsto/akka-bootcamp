@@ -51,17 +51,17 @@ namespace ChartApp
 
         private void cpuSelector_Click(object sender, EventArgs e)
         {
-
+        	toggleActors[CounterType.Cpu].Tell(new ButtonToggleActor.Toggle());
         }
 
         private void memorySelector_Click(object sender, EventArgs e)
         {
-
+        	toggleActors[CounterType.Memory].Tell(new ButtonToggleActor.Toggle());
         }
 
         private void diskSelector_Click(object sender, EventArgs e)
         {
-
+        	toggleActors[CounterType.Disk].Tell(new ButtonToggleActor.Toggle());
         }
     }
 }
