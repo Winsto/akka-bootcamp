@@ -82,7 +82,6 @@ namespace ChartApp.Actors
 			               				Props.Create(() => new PerformanceCounterActor(watch.Counter.ToString(), CounterGenerators[watch.Counter])));
 			               		
 			               		counterActors[watch.Counter] = counterActor;
-			               		                                                
 			               	}
 			               	
 			               	chartingActor.Tell(new ChartingActor.AddSeries(CounterSeries[watch.Counter]()));
