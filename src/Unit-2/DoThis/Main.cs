@@ -25,7 +25,7 @@ namespace ChartApp
 
         private void Main_Load(object sender, EventArgs e)
         {
-            _chartActor = Program.ChartActors.ActorOf(Props.Create(() => new ChartingActor(sysChart)), "charting");
+            _chartActor = Program.ChartActors.ActorOf(Props.Create(() => new ChartingActor(sysChart, pauseSelector)), "charting");
             _chartActor.Tell(new ChartingActor.InitializeChart(null));
             
             coordinatorActor = Program.ChartActors.ActorOf(Props.Create(() =>
@@ -64,6 +64,8 @@ namespace ChartApp
         }
         
         private void PauseSelectorClick(object sender, EventArgs e)
-        {}
+        {
+        	_chartActor.Tell(new ChartingActor.TogglePause());
+        }
     }
 }
