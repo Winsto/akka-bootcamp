@@ -62,6 +62,11 @@ namespace ChartApp.Actors
 		
 		private IActorRef chartingActor;
 		
+		public PerformanceCounterCoordinatorActor(IActorRef chartingActor) :
+            this(chartingActor, new Dictionary<CounterType, IActorRef>())
+        {
+        }
+
 		public PerformanceCounterCoordinatorActor(IActorRef chartingActor, Dictionary<CounterType, IActorRef> counterActors)
 		{
 			this.chartingActor = chartingActor;
