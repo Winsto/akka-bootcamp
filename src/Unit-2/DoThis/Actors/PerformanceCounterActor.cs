@@ -1,13 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Neil.Winstanley
- * Date: 28/05/2015
- * Time: 10:56
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-namespace ChartApp.Actors
+﻿namespace ChartApp.Actors
 {
 	using System;
 	using System.Collections.Generic;

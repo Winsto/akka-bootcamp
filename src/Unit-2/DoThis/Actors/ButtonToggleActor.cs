@@ -1,16 +1,7 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Neil.Winstanley
- * Date: 28/05/2015
- * Time: 12:22
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-using System;
-
-namespace ChartApp.Actors
+﻿namespace ChartApp.Actors
 {
-	using System.Windows.Forms;
+    using System;
+    using System.Windows.Forms;
 	
 	using Akka.Actor;
 	
