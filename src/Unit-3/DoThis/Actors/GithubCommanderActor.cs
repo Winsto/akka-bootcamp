@@ -44,46 +44,85 @@ namespace GithubActors.Actors
 
         #endregion
 
-        private IActorRef _coordinator;
-        private IActorRef _canAcceptJobSender;
+        private IActorRef coordinator;
+        private IActorRef canAcceptJobSender;
+        private int pendingJobReplies;
 
         public IStash Stash{get;set;}
 
         public GithubCommanderActor()
         {
+            Ready();
+        }
+
+        private void Ready()
+        {
             Receive<CanAcceptJob>(job =>
             {
-                _canAcceptJobSender = Sender;
-                _coordinator.Tell(job);
+                coordinator.Tell(job);
+
+                BecomeAsking();
             });
+        }
+
+        private void BecomeAsking()
+        {
+            canAcceptJobSender = Sender;
+
+            pendingJobReplies = 3; // the number of routees.
+
+            Become(Asking);
+        }
+
+        private void Asking()
+        {
+            // Stash any subsequent requets
+            Receive<CanAcceptJob>(job => Stash.Stash());
 
             Receive<UnableToAcceptJob>(job =>
             {
-                _canAcceptJobSender.Tell(job);
+                pendingJobReplies--;
+
+                if (pendingJobReplies == 0)
+                {
+                    canAcceptJobSender.Tell(job);
+
+                    BecomeReady();
+                }
             });
 
             Receive<AbleToAcceptJob>(job =>
             {
-                _canAcceptJobSender.Tell(job);
+                canAcceptJobSender.Tell(job);
 
-                //start processing messages
-                _coordinator.Tell(new GithubCoordinatorActor.BeginJob(job.Repo));
+                // Start processing messages.
+                Sender.Tell(new GithubCoordinatorActor.BeginJob(job.Repo));
 
-                //launch the new window to view results of the processing
-                Context.ActorSelection(ActorPaths.MainFormActor.Path).Tell(new MainFormActor.LaunchRepoResultsWindow(job.Repo, Sender));
+                // launch the new window to view results of the processing
+                Context.ActorSelection(ActorPaths.MainFormActor.Path).Tell(
+                    new MainFormActor.LaunchRepoResultsWindow(job.Repo, Sender));
+
+                BecomeReady();
             });
+        }
+
+        private void BecomeReady()
+        {
+            Become(Ready);
+
+            Stash.UnstashAll();
         }
 
         protected override void PreStart()
         {
-            _coordinator = Context.ActorOf(Props.Create(() => new GithubCoordinatorActor()), ActorPaths.GithubCoordinatorActor.Name);
+            coordinator = Context.ActorOf(Props.Create(() => new GithubCoordinatorActor()), ActorPaths.GithubCoordinatorActor.Name);
             base.PreStart();
         }
 
         protected override void PreRestart(Exception reason, object message)
         {
             //kill off the old coordinator so we can recreate it from scratch
-            _coordinator.Tell(PoisonPill.Instance);
+            coordinator.Tell(PoisonPill.Instance);
             base.PreRestart(reason, message);
         }
     }
