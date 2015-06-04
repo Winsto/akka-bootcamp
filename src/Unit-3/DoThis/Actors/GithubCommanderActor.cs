@@ -47,6 +47,7 @@ namespace GithubActors.Actors
         private IActorRef coordinator;
         private IActorRef canAcceptJobSender;
         private int pendingJobReplies;
+        private RepoKey repoJob;
 
         public IStash Stash{get;set;}
 
@@ -60,6 +61,8 @@ namespace GithubActors.Actors
             Receive<CanAcceptJob>(job =>
             {
                 coordinator.Tell(job);
+
+                repoJob = job.Repo;
 
                 BecomeAsking();
             });
