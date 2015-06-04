@@ -75,6 +75,9 @@ namespace GithubActors.Actors
             // block, but ask the router for the number of routees. Avoids magic numbers.
             pendingJobReplies = coordinator.Ask<Routees>(new GetRoutees()).Result.Members.Count();
             Become(Asking);
+
+            // send ourselves a timeout if no message within 3 seconds
+            Context.SetReceiveTimeout(TimeSpan.FromSeconds(3));
         }
 
         private void Asking()
