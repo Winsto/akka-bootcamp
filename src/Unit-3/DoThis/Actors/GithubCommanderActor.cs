@@ -110,6 +110,13 @@ namespace GithubActors.Actors
 
                 BecomeReady();
             });
+
+            Receive<ReceiveTimeout>(timeout =>
+            {
+                canAcceptJobSender.Tell(new UnableToAcceptJob(repoJob));
+
+                BecomeReady();
+            });
         }
 
         private void BecomeReady()
