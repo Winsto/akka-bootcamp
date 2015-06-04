@@ -124,6 +124,9 @@ namespace GithubActors.Actors
             Become(Ready);
 
             Stash.UnstashAll();
+
+            //cancel timeouts
+            Context.SetReceiveTimeout(null);
         }
 
         protected override void PreStart()
